@@ -1,55 +1,61 @@
-const User=require('../models/User')
-const Note=require('../models/Note')
-const asyncHandler=require('express-async-handler')
-const bcrypt=require('bcrypt')
+const User = require('../models/User')
+const Note = require('../models/Note')
+const bcrypt = require('bcrypt')
 
-const getAllUsers=asyncHandler(async(req,res)=>{
-   const users=await User.find().select('-password').lean()
-   if(!users?.length)
-    {
-        return res.status(400).json({message:"No users found"})
+// @desc Get all users
+// @route GET /users
+// @access Private
+const getAllUsers = async (req, res) => {
+    // Get all users from MongoDB
+    const users = await User.find().select('-password').lean()
+
+    // If no users 
+    if (!users?.length) {
+        return res.status(400).json({ message: 'No users found' })
     }
+
     res.json(users)
-})
+}
 
+// @desc Create new user
+// @route POST /users
+// @access Private
+const createNewUser = async (req, res) => {
+    const { username, password, roles } = req.body
 
-const createNewUser=asyncHandler(async(req,res)=>{
-   const {username,password,roles}=req.body
-   
-   //confirming data
-   if(!username || !password || !Array.isArray(roles)||!roles.length)
-    {
-        return res.status(400).json({message:'All field are required'})
+    // Confirm data
+    if (!username || !password) {
+        return res.status(400).json({ message: 'All fields are required' })
     }
-    
-    //check duplicates
-    const duplicate=await User.findOne({username}).lean().exec()
 
-    if(duplicate)
-        {
-            return res.status(409).json({message:"Duplicate username"})
-        }
+    // Check for duplicate username
+    const duplicate = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
-        const hashedPwd=await bcrypt.hash(password,10)
+    if (duplicate) {
+        return res.status(409).json({ message: 'Duplicate username' })
+    }
 
-        const userObject={username,"password":hashedPwd,roles}
+    // Hash password 
+    const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
 
-        //create and store new user
+    const userObject = (!Array.isArray(roles) || !roles.length)
+        ? { username, "password": hashedPwd }
+        : { username, "password": hashedPwd, roles }
 
-        const user=await User.create(userObject)
+    // Create and store new user 
+    const user = await User.create(userObject)
 
-//create
-        if(user)
-            {
-                res.status(201).json({message:`New User ${username} created`})
-            }
-            else{
-                res.status(400).json({message:"Invalid user data received"})
-            }
+    if (user) { //created 
+        res.status(201).json({ message: `New user ${username} created` })
+    } else {
+        res.status(400).json({ message: 'Invalid user data received' })
+    }
+}
 
-})
-
-const updateUser = asyncHandler(async (req, res) => {
+// @desc Update a user
+// @route PATCH /users
+// @access Private
+const updateUser = async (req, res) => {
     const { id, username, roles, active, password } = req.body
 
     // Confirm data 
@@ -65,7 +71,7 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 
     // Check for duplicate 
-    const duplicate = await User.findOne({ username }).lean().exec()
+    const duplicate = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
     // Allow updates to the original user 
     if (duplicate && duplicate?._id.toString() !== id) {
@@ -84,9 +90,12 @@ const updateUser = asyncHandler(async (req, res) => {
     const updatedUser = await user.save()
 
     res.json({ message: `${updatedUser.username} updated` })
-})
+}
 
-const deleteUser = asyncHandler(async (req, res) => {
+// @desc Delete a user
+// @route DELETE /users
+// @access Private
+const deleteUser = async (req, res) => {
     const { id } = req.body
 
     // Confirm data
@@ -112,9 +121,9 @@ const deleteUser = asyncHandler(async (req, res) => {
     const reply = `Username ${result.username} with ID ${result._id} deleted`
 
     res.json(reply)
-})
+}
 
-module.exports={
+module.exports = {
     getAllUsers,
     createNewUser,
     updateUser,

@@ -1,0 +1,18 @@
+20240606	13:17:43	93af87a4-abbf-49d7-b939-b7e0e4292f37	Error:Not allowed by cors	OPTIONS	/	undefined
+20240606	13:17:43	fd0ddb74-4d6d-4dd4-a973-5c7252c273e4	Error:Not allowed by cors	GET	/	undefined
+20240606	16:56:56	49eeaf08-efd0-4f67-b14b-19d5dc98f80f	SyntaxError:Expected double-quoted property name in JSON at position 37	POST	/Users	undefined
+20240606	16:58:28	779591e3-28a6-4a0a-b914-1f0402b8a30f	SyntaxError:Expected double-quoted property name in JSON at position 33	PATCH	/Users	undefined
+20240606	17:30:25	17068e69-d056-41f8-86c6-5eeadb827862	CastError:Cast to ObjectId failed for value "66619cedcb509e42501f3c5" (type string) at path "user" for model "Note"	DELETE	/Users	undefined
+20240606	17:30:41	e290663e-2f36-4488-bef8-69435a826c3b	CastError:Cast to ObjectId failed for value "66619cedcb509e4e2501f3c" (type string) at path "user" for model "Note"	DELETE	/Users	undefined
+20240606	17:32:13	167c708a-75cc-4969-81a7-a0188a4d5c34	SyntaxError:Unexpected token '"', ..."
+        "username""... is not valid JSON	DELETE	/Users	undefined
+20240607	14:30:18	d0936ee4-5be8-412f-80f6-d1ac3636c061	ValidationError:Note validation failed: user: Cast to ObjectId failed for value "dhanusha reddy" (type string) at path "user" because of "BSONError"	POST	/notes	undefined
+20240607	14:30:31	d1c234ab-f040-40ee-9ce5-edfc2925dab7	ValidationError:Note validation failed: user: Cast to ObjectId failed for value "dhanushareddy" (type string) at path "user" because of "BSONError"	POST	/notes	undefined
+20240607	14:32:05	7ec5fcf6-aedb-437e-b179-8b4d1616e809	ValidationError:Note validation failed: user: Cast to ObjectId failed for value "dhanusha" (type string) at path "user" because of "BSONError"	POST	/notes	undefined
+20240607	14:33:18	7ef3e79a-99fb-4ce4-a629-9da75ec1ce1f	ValidationError:Note validation failed: user: Cast to ObjectId failed for value "01" (type string) at path "user" because of "BSONError"	POST	/notes	undefined
+20240607	14:47:24	eb930e9f-cacd-42b1-8b57-c54836b3a52e	ValidationError:Note validation failed: user: Cast to ObjectId failed for value "dhanusha" (type string) at path "user" because of "BSONError"	POST	/notes	undefined
+20240607	15:42:56	ad86a080-2e86-4a03-a4c9-510250811a6e	Error:read ECONNRESET	GET	/notes	undefined
+20240607	15:43:41	51752e83-8dda-4221-8aa7-48f8929ed15f	MongoServerSelectionError:getaddrinfo ENOTFOUND ac-iypnuco-shard-00-00.jaj3uh9.mongodb.net	GET	/notes	undefined
+20240607	15:44:27	b42b8a29-0526-466e-88b6-47bc0f55dbe6	MongoServerSelectionError:getaddrinfo ENOTFOUND ac-iypnuco-shard-00-00.jaj3uh9.mongodb.net	GET	/notes	undefined
+20240607	15:45:13	615b6609-061d-4d63-a107-aac11562bce7	MongoServerSelectionError:getaddrinfo ENOTFOUND ac-iypnuco-shard-00-00.jaj3uh9.mongodb.net	GET	/notes	undefined
+20240607	15:45:59	ca9a9c4d-d471-4a0f-a42e-4bacc0997baa	MongoServerSelectionError:getaddrinfo ENOTFOUND ac-iypnuco-shard-00-00.jaj3uh9.mongodb.net	GET	/notes	undefined
